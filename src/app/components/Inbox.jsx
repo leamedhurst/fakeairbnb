@@ -1,4 +1,3 @@
-// components/Inbox.jsx
 'use client';
 import React from 'react';
 
@@ -8,13 +7,13 @@ const Inbox = ({ conversations, onSelectConversation }) => {
       <h2 className="text-xl font-bold mb-4">Inbox</h2>
       {conversations.map((conv) => (
         <div
-          key={conv.id}
+          key={conv.conversationId || conv.id}  // Unique key for each conversation
           className="p-2 border-b cursor-pointer hover:bg-gray-100"
-          onClick={() => onSelectConversation(conv.id)}
+          onClick={() => onSelectConversation(conv.conversationId || conv.id)}
         >
           <h3 className="font-semibold">{conv.property}</h3>
           <p className="text-sm text-gray-600">
-            <strong>{conv.user}:</strong> {conv.messages[conv.messages.length - 1]?.text || "No messages yet"}
+            <strong>{conv.user}:</strong> {conv.messages[conv.messages.length - 1]?.text || 'No messages yet'}
           </p>
         </div>
       ))}

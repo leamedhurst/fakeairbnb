@@ -6,7 +6,7 @@ import Inbox from '@/app/components/Inbox';
 import ChatWindow from '@/app/components/ChatWindow';
 
 // Replace with your actual API Gateway URL
-const API_URL = 'https://your-api-gateway-url';
+const API_URL = 'https://t9tjcj1rud.execute-api.us-east-1.amazonaws.com';
 
 async function fetchConversations() {
   try {
@@ -52,7 +52,7 @@ async function fetchConversationById(conversationId: number) {
 
 async function addMessageToConversation(conversationId: number, message: { sender: string; text: string; timestamp: string }) {
   try {
-    const response = await fetch(`${API_URL}/conversations/${conversationId}/messages`, {
+    const response = await fetch(`${API_URL}/conversations/${conversationId}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -73,9 +73,9 @@ async function addMessageToConversation(conversationId: number, message: { sende
 }
 
 export default function Home() {
-  const [conversations, setConversations] = useState([]);
+  const [conversations, setConversations] = useState<{ conversationId: number; id?: number; property: string; user: string; messages: any[] }[]>([]);
   const [activeConversationId, setActiveConversationId] = useState<number | null>(null);
-  const [activeConversation, setActiveConversation] = useState(null);
+  const [activeConversation, setActiveConversation] = useState<any>(null);
 
   useEffect(() => {
     fetchConversations().then(setConversations);
@@ -99,7 +99,10 @@ export default function Home() {
   return (
     <div className="h-screen flex">
       <div className="w-1/3 border-r">
-        <Inbox conversations={conversations} onSelectConversation={handleSelectConversation} />
+      <Inbox
+  conversations={conversations}
+  onSelectConversation={handleSelectConversation}
+/>
       </div>
       <div className="w-2/3">
         <ChatWindow conversation={activeConversation} onSendMessage={handleSendMessage} />
