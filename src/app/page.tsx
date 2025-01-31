@@ -50,14 +50,23 @@ async function fetchConversationById(conversationId: number) {
   }
 }
 
-async function addMessageToConversation(conversationId: number, message: { sender: string; text: string; timestamp: string }) {
+async function addMessageToConversation(
+  conversationId: number,
+  message: { sender: string; text: string; timestamp: string }
+) {
   try {
+    // Add the 'source' field to the message payload
+    const messageWithSource = {
+      ...message,
+      source: 'app',  // Indicate that this message update comes from the app
+    };
+
     const response = await fetch(`${API_URL}/conversations/${conversationId}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(message),
+      body: JSON.stringify(messageWithSource),  // Send the modified message payload
     });
 
     if (!response.ok) {
