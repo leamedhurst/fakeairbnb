@@ -1,8 +1,8 @@
 // pages/index.js
 'use client';
 import { useState } from 'react';
-import Inbox from '../components/Inbox';
-import ChatWindow from '../components/ChatWindow';
+import Inbox from '../src/app/components/Inbox';
+import ChatWindow from '../src/app/components/ChatWindow';
 
 const mockConversations = [
   {
